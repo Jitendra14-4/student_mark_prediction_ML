@@ -10,7 +10,6 @@ saved_data = joblib.load("models/student_marks_model.pkl")
 model = saved_data["model"]
 features = saved_data["features"]
 
-
 # Detect weak areas
 def detect_weak_areas(row):
     weak_areas = []
