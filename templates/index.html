@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Marks Predictor</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top left, #253b80, transparent 40%),
+                radial-gradient(circle at bottom right, #512b81, transparent 40%),
+                #080e20;
+    padding: 20px;
+}
+
+/* Main upload card */
+.upload-card {
+    width: 100%;
+    max-width: 500px;
+    padding: 40px 35px;
+    text-align: center;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 0 25px rgba(0, 225, 255, 0.15),
+                0 0 60px rgba(110, 70, 255, 0.15);
+    transition: 0.4s;
+}
+
+.upload-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 35px rgba(0, 225, 255, 0.3),
+                0 0 80px rgba(110, 70, 255, 0.25);
+}
+
+/* Heading */
+.upload-card h1 {
+    color: #ffffff;
+    font-size: 28px;
+    margin-bottom: 12px;
+    text-shadow: 0 0 15px rgba(0, 225, 255, 0.7);
+}
+
+.upload-card p {
+    color: #bdc9e6;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 28px;
+}
+
+/* Upload area */
+.upload-area {
+    display: block;
+    padding: 30px 20px;
+    border: 2px dashed #39d9ff;
+    border-radius: 16px;
+    background: rgba(0, 225, 255, 0.05);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.upload-area:hover {
+    background: rgba(0, 225, 255, 0.12);
+    border-color: #ffffff;
+    box-shadow: 0 0 20px rgba(0, 225, 255, 0.25);
+}
+
+.upload-icon {
+    font-size: 45px;
+    margin-bottom: 12px;
+}
+
+.upload-area h3 {
+    color: #ffffff;
+    font-size: 17px;
+    margin-bottom: 8px;
+}
+
+.upload-area span {
+    color: #9fb2d9;
+    font-size: 13px;
+}
+
+/* Hide default input */
+#file {
+    display: none;
+}
+
+/* File name */
+#file-name {
+    color: #54eaff;
+    margin-top: 15px;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+/* Predict button */
+.predict-btn {
+    width: 100%;
+    margin-top: 25px;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    color: #071426;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    background: linear-gradient(90deg, #36e4ff, #8b7cff);
+    box-shadow: 0 0 18px rgba(54, 228, 255, 0.35);
+    transition: 0.3s;
+}
+
+.predict-btn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 30px rgba(54, 228, 255, 0.65);
+}
+
+.predict-btn:active {
+    transform: scale(0.98);
+}
+
+/* Footer */
+.footer {
+    margin-top: 25px;
+    color: #8495b8;
+    font-size: 12px;
+}
+
+.footer strong {
+    color: #43dcff;
+}
+</style>
+</head>
+
+<body>
+
+<div class="upload-card">
+
+    <h1>🎓 Student Marks Predictor</h1>
+
+    <p>
+        Upload student academic data and get
+        machine learning-based marks predictions.
+    </p>
+
+    <form action="/predict" method="POST"
+          enctype="multipart/form-data">
+
+        <label for="file" class="upload-area">
+
+            <div class="upload-icon">📂</div>
+
+            <h3>Choose Student Data File</h3>
+
+            <span>Click here to browse CSV or Excel files</span>
+
+            <div id="file-name">No file selected</div>
+
+        </label>
+
+        <input
+            type="file"
+            id="file"
+            name="file"
+            accept=".xlsx,.csv"
+            required
+        >
+
+        <button type="submit" class="predict-btn">
+            ✨ Predict Student Marks
+        </button>
+
+    </form>
+
+    <div class="footer">
+        Powered by <strong>Machine Learning</strong>
+    </div>
+
+</div>
+
+<script>
+const fileInput = document.getElementById("file");
+const fileName = document.getElementById("file-name");
+
+fileInput.addEventListener("change", function () {
+    if (this.files.length > 0) {
+        fileName.textContent = "Selected: " + this.files[0].name;
+    } else {
+        fileName.textContent = "No file selected";
+    }
+});
+</script>
+
+</body>
+</html>

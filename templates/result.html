@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Prediction Results</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            padding: 35px 20px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+
+            background:
+                radial-gradient(circle at top left, #253b80, transparent 40%),
+                radial-gradient(circle at bottom right, #512b81, transparent 40%),
+                #080e20;
+            color: white;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        /* Heading */
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 12px;
+            color: #ffffff;
+            text-shadow: 0 0 18px #36e4ff;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #bdc9e6;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        /* Results card */
+        .table-box {
+            padding: 25px;
+            border-radius: 20px;
+
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+
+            backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 0 25px rgba(0, 225, 255, 0.15),
+                0 0 60px rgba(110, 70, 255, 0.15);
+
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 650px;
+            border-collapse: collapse;
+        }
+
+        th {
+            padding: 17px 14px;
+            background: linear-gradient(90deg, #087fae, #6355c8);
+            color: white;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        td {
+            padding: 17px 14px;
+            text-align: center;
+            color: #e0eaff;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+        }
+
+        tbody tr {
+            transition: 0.3s;
+        }
+
+        tbody tr:hover {
+            background: rgba(54, 228, 255, 0.10);
+            box-shadow: inset 0 0 15px rgba(54, 228, 255, 0.08);
+        }
+
+        /* Marks */
+        .marks {
+            color: #42eaff;
+            font-size: 17px;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(54,228,255,0.5);
+        }
+
+        /* Performance labels */
+        .performance {
+            display: inline-block;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .excellent {
+            color: #55ffb1;
+            background: rgba(40, 220, 140, 0.13);
+            border: 1px solid #37dc9a;
+        }
+
+        .good {
+            color: #ffe27a;
+            background: rgba(255, 210, 70, 0.12);
+            border: 1px solid #eac34f;
+        }
+
+        .needs {
+            color: #ff8d9d;
+            background: rgba(255, 70, 100, 0.12);
+            border: 1px solid #ff7187;
+        }
+
+        .weak {
+            color: #ffb1b1;
+            max-width: 280px;
+        }
+
+        /* Back button */
+        .button-area {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 14px 28px;
+            border-radius: 12px;
+            text-decoration: none;
+
+            color: #071426;
+            font-size: 15px;
+            font-weight: bold;
+
+            background: linear-gradient(90deg, #36e4ff, #8b7cff);
+
+            box-shadow: 0 0 20px rgba(54, 228, 255, 0.35);
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 30px rgba(54, 228, 255, 0.65);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #8495b8;
+            font-size: 12px;
+        }
+
+        .footer strong {
+            color: #43dcff;
+        }
+
+        @media(max-width: 600px) {
+            h1 {
+                font-size: 25px;
+            }
+
+            .table-box {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🎓 Student Prediction Results</h1>
+
+    <p class="subtitle">
+        Machine Learning Based Student Performance Analysis
+    </p>
+
+    <div class="table-box">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Predicted Marks (/20)</th>
+                    <th>Performance</th>
+                    <th>Weak Areas</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for student in results %}
+
+                <tr>
+                    <td>{{ student.get('student_id', loop.index) }}</td>
+
+                    <td class="marks">
+                        {{ student['Predicted_Marks'] }}
+                    </td>
+
+                    <td>
+                        {% if student['Performance'] == 'Excellent' %}
+                            <span class="performance excellent">
+                                Excellent
+                            </span>
+
+                        {% elif student['Performance'] == 'Good' %}
+                            <span class="performance good">
+                                Good
+                            </span>
+
+                        {% else %}
+                            <span class="performance needs">
+                                Needs Improvement
+                            </span>
+                        {% endif %}
+                    </td>
+
+                    <td class="weak">
+                        {{ student['Weak_Areas'] }}
+                    </td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="button-area">
+        <a href="/" class="back-btn">
+            ↩ Upload Another File
+        </a>
+    </div>
+
+    <div class="footer">
+        Powered by <strong>Python | Flask | Machine Learning</strong>
+    </div>
+
+</div>
+
+</body>
+</html>
